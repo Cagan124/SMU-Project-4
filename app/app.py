@@ -10,6 +10,10 @@ def home():
     # Return template and data
     return render_template("index.html")
 
+@app.route("/spotify_recommender")
+def spotify_recommender():
+    return render_template("spotify_recommender.html")
+
 @app.route("/about_us")
 def about_us():
     # Return template and data
