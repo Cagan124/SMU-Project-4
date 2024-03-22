@@ -35,9 +35,14 @@
 ### Contributors
 
 - Joshua Hale
+- ![image](https://github.com/Cagan124/SMU-Project-4/assets/97692681/2611eab6-aa87-4b2b-9196-d9bb5824eb09)
 - John (Cagan) Abney
+- ![image](https://github.com/Cagan124/SMU-Project-4/assets/97692681/07f113fe-c90d-49fd-a198-6a839cde27be)
 - Raheem Yusuff
+- ![image](https://github.com/Cagan124/SMU-Project-4/assets/97692681/32dadaeb-f6da-4588-8558-86a868ef2934)
 - Jason Cisneros
+- ![image](https://github.com/Cagan124/SMU-Project-4/assets/97692681/ae352030-2120-4a3c-bc2b-e66f726c0545)
+
 
 ### Questions and Concerns
 
