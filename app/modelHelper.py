@@ -149,13 +149,13 @@ class ModelHelper():
         
     def makePredictions(self, track_name, track_artist):
             # code somehow broke and the read_csv needed to be updated
-            df = pd.read_csv('./SMU-Project-04/Resources/df_final.csv')
+            df = pd.read_csv('../Resources/df_final.csv')
             df_final = df.copy()
+            df_final['track_artist'] = df_final['artists']
         
             # define the number of nearest neighbors to consider
-            k = 10
+            k = 20
 
-            # initialize the model with the number of neighbors
             # initialize the model with the number of neighbors
             model = NearestNeighbors(n_neighbors=k)
 
@@ -182,8 +182,7 @@ class ModelHelper():
             tracks = tracks.loc[tracks.track_name == track_name]   
             tracks = tracks.loc[tracks.artists == track_artist]   
 
-            cols = ['id', 'name_clean','category_clean', 'mechanic_clean', 'average_rating', 'total_owners', 'minplayers', 'maxplayers', 'maxplaytime', 
-                    'age', 'total_weights', 'mechanic_count', 'category_count', 'designer_count', "distance"]
+            cols = ['track_id', 'track_name','artists', 'album_name', 'track_genre']
 
             tracks = tracks.loc[:, cols]
             tracks = tracks.sort_values(by = "distance")

@@ -9,23 +9,15 @@ $(document).ready(function() {
 
 // call Flask API endpoint
 function makePredictions() {
-    var sex_flag = $("#gender").val();
-    var age = $("#age").val();
-    var fare = $("#fare").val();
-    var familySize = $("#familySize").val();
-    var p_class = $("#pclass").val();
-    var embarked = $("#embarked").val();
+    let track_name = $("#track_name").val();
+    let track_artist = $("#track_artist").val();
 
     // check if inputs are valid
 
     // create the payload
-    var payload = {
-        "sex_flag": sex_flag,
-        "age": age,
-        "fare": fare,
-        "familySize": familySize,
-        "p_class": p_class,
-        "embarked": embarked
+    let payload = {
+        "track_name": track_name,
+        "track_artist": track_artist
     }
 
     // Perform a POST request to the query URL
@@ -37,12 +29,8 @@ function makePredictions() {
         success: function(returnedData) {
             // print it
             console.log(returnedData);
+            renderTable(returnedData["prediction"]);
 
-            if (returnedData["prediction"] == 1) {
-                $("#output").text("You Survived!");
-            } else {
-                $("#output").text("You did not survive, sorry. :(");
-            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert("Status: " + textStatus);
@@ -51,3 +39,34 @@ function makePredictions() {
     });
 
 }
+
+    function renderTable(inp_data) {
+        // init html string
+        let html = "";
+    
+        // destroy datatable
+        $('#sql_table').DataTable().clear().destroy();
+    
+        // loop through all rows
+        inp_data.forEach(function(row) {
+            html += "<tr>";
+           
+            // loop through each cell (order matters)
+            html += `<td>${row.track_id}</td>`;
+            html += `<td>${row.track_name}</td>`;
+            html += `<td>${row.track_artist}</td>`;
+            html += `<td>${row.album_name}</td>`;
+            html += `<td>${row.track_genre}</td>`;
+        
+            // close the row
+            html += "</tr>";
+        });
+    
+        // shove the html in our elements
+        console.log(html);
+        $("#sql_table tbody").html("");
+        $("#sql_table tbody").append(html);
+    
+        // remake data table
+        $('#sql_table').DataTable({order: [[6, 'asc']]});
+    }
