@@ -54,7 +54,7 @@ function makePredictions() {
             // loop through each cell (order matters)
             html += `<td>${row.track_id}</td>`;
             html += `<td>${row.track_name}</td>`;
-            html += `<td>${row.track_artist}</td>`;
+            html += `<td>${row.artists}</td>`;
             html += `<td>${row.album_name}</td>`;
         
             // close the row
