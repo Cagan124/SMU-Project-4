@@ -56,7 +56,6 @@ function makePredictions() {
             html += `<td>${row.track_name}</td>`;
             html += `<td>${row.track_artist}</td>`;
             html += `<td>${row.album_name}</td>`;
-            html += `<td>${row.track_genre}</td>`;
         
             // close the row
             html += "</tr>";
