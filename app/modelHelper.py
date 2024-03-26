@@ -163,7 +163,8 @@ class ModelHelper():
             model.fit(df_final[self.features])
             
             # get the track_id of the given track name
-            track_id = df_final[df_final['track_name'] == track_name]['track_id'].iloc[0]
+            track_id = df_final[(df_final['track_name'] == track_name) & (df_final['track_artist'] == track_artist)]['track_id'].iloc[0]
+
             # print(f"track id: {track_id}")
             
             # get the index of the tracks in the model dataframe
@@ -200,7 +201,7 @@ class ModelHelper():
             df = pd.read_csv('Resources/df_final.csv')
             df_final = df.copy()
             df_final['track_artist'] = df_final['artists']
-            df_final = df_final.loc[df_final.popularity <= 0].reset_index(drop=True)
+            df_final_pop = df_final.loc[df_final.popularity <= 0].reset_index(drop=True)
 
 
         
@@ -211,10 +212,11 @@ class ModelHelper():
             model = NearestNeighbors(n_neighbors=k)
 
             # fit the model to the data
-            model.fit(df_final[self.features])
+            model.fit(df_final_pop[self.features])
             
             # get the track_id of the given track name
-            track_id = df_final[df_final['track_name'] == track_name]['track_id'].iloc[0]
+            track_id = df_final[(df_final['track_name'] == track_name) & (df_final['track_artist'] == track_artist)]['track_id'].iloc[0]
+
             # print(f"track id: {track_id}")
             
             # get the index of the tracks in the model dataframe
@@ -229,7 +231,7 @@ class ModelHelper():
             # print(f"distances: {distances[0]}")
             
             # get the track names of the nearest neighbors
-            tracks = df_final.iloc[indices[0]]
+            tracks = df_final_pop.iloc[indices[0]]
             tracks["distance"] = distances[0]
             
 
