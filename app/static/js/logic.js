@@ -11,13 +11,17 @@ $(document).ready(function() {
 function makePredictions() {
     let track_name = $("#track_name").val();
     let track_artist = $("#track_artist").val();
+    let use_hipster = $("#use_hipster").val();
+    let playlist_length = $("#playlist_length").val();
 
     // check if inputs are valid
 
     // create the payload
     let payload = {
         "track_name": track_name,
-        "track_artist": track_artist
+        "track_artist": track_artist,
+        "use_hipster": use_hipster,
+        "playlist_length": playlist_length
     }
 
     // Perform a POST request to the query URL
@@ -56,6 +60,8 @@ function makePredictions() {
             html += `<td>${row.track_name}</td>`;
             html += `<td>${row.artists}</td>`;
             html += `<td>${row.album_name}</td>`;
+            html += `<td>${row.distance}</td>`;
+            html += `<td>${row.popularity}</td>`;
         
             // close the row
             html += "</tr>";
@@ -67,5 +73,5 @@ function makePredictions() {
         $("#sql_table tbody").append(html);
     
         // remake data table
-        $('#sql_table').DataTable({order: [[6, 'asc']]});
+        $('#sql_table').DataTable({order: [[4, 'asc']]});
     }

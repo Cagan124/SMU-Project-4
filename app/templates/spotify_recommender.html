@@ -69,16 +69,36 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-form-label" for="track_artist">Artist</label>
-                            <input type="text" class="form-control" value="2" id="track_artist">
+                            <input type="text" class="form-control" value="" id="track_artist">
                         </div>
                       
                     </div>
                 </div>
                 <div class="row">
+                  <div class="col-md-6">
+                  
+                      <div class="form-group">
+                          <label class="col-form-label" for="use_hipster">Find Unknown Music</label>
+                          <select class="form-control" id = "use_hipster">
+                              <option value = "yes">Yes</option>
+                              <option value = "no" selected>No</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="col-form-label" for="playlist_length">Playlist Length</label>
+                          <input type="text" class="form-control" value="20" id="playlist_length">
+                      </div>
+                    
+                  </div>
+              </div>
+                <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-primary" id="filter">Recommend Me Songs!</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -93,6 +113,8 @@
                             <th>Track Name</th>
                             <th>Track Artists</th>
                             <th>Album Name</th>
+                            <th>Similarity</th>
+                            <th>Popularity</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

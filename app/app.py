@@ -61,8 +61,14 @@ def make_predictions():
     # parse
     track_name = content["track_name"]
     track_artist = content["track_artist"]
+    use_hipster = content["use_hipster"]
+    playlist_length = int(content["playlist_length"])
     
-    preds = modelHelper.makePredictions(track_name, track_artist)
+    if use_hipster == "yes":
+        preds = modelHelper.makePredictions2(track_name, track_artist, playlist_length)
+    else:
+        preds = modelHelper.makePredictions(track_name, track_artist, playlist_length)
+
     return(jsonify({"ok": True, "prediction":preds}))
 
 #############################################################

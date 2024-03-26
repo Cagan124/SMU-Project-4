@@ -130,7 +130,7 @@ class ModelHelper():
     'track_genre_trip-hop',
     'track_genre_turkish',
     'track_genre_world-music',
-    'popularity',
+    #'popularity',
     'duration_ms',
     'explicit',
     'danceability',
@@ -147,14 +147,14 @@ class ModelHelper():
     'time_signature']
     # define a function to recommend songs based on a given song name
         
-    def makePredictions(self, track_name, track_artist):
+    def makePredictions(self, track_name, track_artist, playlist_length):
             # code somehow broke and the read_csv needed to be updated
             df = pd.read_csv('Resources/df_final.csv')
             df_final = df.copy()
             df_final['track_artist'] = df_final['artists']
         
             # define the number of nearest neighbors to consider
-            k = 20
+            k = playlist_length
 
             # initialize the model with the number of neighbors
             model = NearestNeighbors(n_neighbors=k)
@@ -187,11 +187,63 @@ class ModelHelper():
             # tracks = tracks.loc[tracks.artists == track_artist] 
             # print(f"tracks: {tracks}") 
 
-            cols = ['track_id', 'track_name','artists', 'album_name', 'distance']
+            cols = ['track_id', 'track_name','artists', 'album_name', 'distance', 'popularity']
 
             tracks = tracks.loc[:, cols]
             tracks = tracks.sort_values(by = "distance")
-            tracks = tracks.head(10).iloc[1:]
+            tracks = tracks.iloc[0:]
+
+            return json.loads(tracks.to_json(orient='records'))
+    
+    def makePredictions2(self, track_name, track_artist, playlist_length):
+            # code somehow broke and the read_csv needed to be updated
+            df = pd.read_csv('Resources/df_final.csv')
+            df_final = df.copy()
+            df_final['track_artist'] = df_final['artists']
+            df_final = df_final.loc[df_final.popularity <= 0].reset_index(drop=True)
+
+
+        
+            # define the number of nearest neighbors to consider
+            k = playlist_length
+
+            # initialize the model with the number of neighbors
+            model = NearestNeighbors(n_neighbors=k)
+
+            # fit the model to the data
+            model.fit(df_final[self.features])
+            
+            # get the track_id of the given track name
+            track_id = df_final[df_final['track_name'] == track_name]['track_id'].iloc[0]
+            # print(f"track id: {track_id}")
+            
+            # get the index of the tracks in the model dataframe
+            idx = df_final[df_final['track_id'] == track_id].index[0]
+            # print(f"idx: {idx}")
+
+            # get the features of the tracks
+            track_features = df_final.loc[idx, self.features].values.reshape(1, -1)
+            
+            # find the k nearest neighbors
+            distances, indices = model.kneighbors(track_features)
+            # print(f"distances: {distances[0]}")
+            
+            # get the track names of the nearest neighbors
+            tracks = df_final.iloc[indices[0]]
+            tracks["distance"] = distances[0]
+            
+
+            # apply filters
+            # tracks = tracks.loc[tracks.track_name == track_name]   
+            # tracks = tracks.loc[tracks.artists == track_artist] 
+            # print(f"tracks: {tracks}") 
+
+
+            cols = ['track_id', 'track_name','artists', 'album_name', 'distance', 'popularity']
+
+            tracks = tracks.loc[:, cols]
+            tracks = tracks.sort_values(by = "distance")
+            tracks = tracks.iloc[0:]
 
             return json.loads(tracks.to_json(orient='records'))
             
