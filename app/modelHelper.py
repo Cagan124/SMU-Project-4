@@ -187,7 +187,7 @@ class ModelHelper():
             # tracks = tracks.loc[tracks.artists == track_artist] 
             # print(f"tracks: {tracks}") 
 
-            cols = ['track_id', 'track_name','artists', 'album_name', 'distance']
+            cols = ['track_id', 'track_name','track', 'album_name', 'distance']
 
             tracks = tracks.loc[:, cols]
             tracks = tracks.sort_values(by = "distance")
